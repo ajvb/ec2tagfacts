@@ -50,6 +50,7 @@ class ec2tagfacts (
   $aws_secret_access_key  = undef,
   $aws_cli_ini_settings   = $ec2tagfacts::params::aws_cli_ini_settings,
   $enable_epel            = $ec2tagfacts::params::enable_epel,
+  $manage_pippkg          = true,
 
 ) inherits ec2tagfacts::params {
 
@@ -70,7 +71,7 @@ class ec2tagfacts (
     Class['epel'] -> Package[$pippkg]
   }
 
-  if $pippkg != undef {
+  if $pippkg != undef and $manage_pippkg {
 
     package { $pippkg:
       ensure => 'installed',
